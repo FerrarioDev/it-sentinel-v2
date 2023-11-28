@@ -17,9 +17,12 @@
               <label for="floatingInput">Email address</label>
             </div>
             <div class="form-floating mb-3">
-                <input type="text" class="form-control rounded-3" id="idField" placeholder="200120000">
+                <input type="text" class="form-control rounded-3"  name="dnarId" id="idField" placeholder="200120000">
                 <label for="floatingInput">Dnar ID</label>
-              </div>
+            </div>
+            <div class="invalid-feedback" style="display:none">
+            
+            </div>
             <div class="form-floating mb-3">
               <input type="password" class="form-control rounded-3" id="floatingPassword" placeholder="Password">
               <label for="floatingPassword">Password</label>
@@ -36,4 +39,6 @@
       </div>
     </div>
   </div>
+
+  <script src="{% static 'js/register.js' %}"> </script>
 {% endblock content %}
