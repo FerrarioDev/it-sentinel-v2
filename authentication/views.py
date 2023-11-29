@@ -14,7 +14,7 @@ class UserValidationView(View):
         dnarId = data['dnarId']
 
         if not str(dnarId).isnumeric():
-            return JsonResponse({'dnarid_error':'dnarId should only contain alphanumeric characters'}, status=400)
+            return JsonResponse({'dnarid_error':'Dnar ID should only contain numeric characters'}, status=400)
         if User.objects.filter(username = dnarId).exists():
             return JsonResponse({'dnarId_error':'dnarId in use, choose another one'}, status=409)
         
