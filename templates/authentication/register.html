@@ -13,17 +13,17 @@
         <div class="modal-body p-5 pt-0">
           <form class="" method="post" action="{% url 'validation_id' %}">
             <div class="form-floating mb-3">
-              <input type="email" class="form-control rounded-3" id="emailField" placeholder="name@example.com">
+              <input type="email" class="form-control rounded-3" name="email" id="emailField" placeholder="name@example.com">
               <label for="floatingInput">Email address</label>
             </div>
             <div class="email-feedback" style="display:none"></div>
 
             <div class="form-floating mb-3">
-                <input type="text" class="form-control rounded-3"  name="dnarId" id="idField" placeholder="200120000">
+                <input type="text" class="form-control rounded-3" name="dnarId" id="idField" placeholder="200120000">
                 <label for="floatingInput">Dnar ID</label>
             </div>
             <div class="invalid-feedback" style="display:none"></div>
-            
+            <p class="text-sn text-success idSuccessOutput"></p>
             <div class="form-floating mb-3">
               <input type="password" class="form-control rounded-3" id="floatingPassword" placeholder="Password">
               <label for="floatingPassword">Password</label>
