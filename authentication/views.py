@@ -4,9 +4,17 @@ from django.http import JsonResponse
 import json
 from django.contrib.auth.models import User
 from validate_email import validate_email
+from django.contrib import messages
 
 class RegisterView(View):
     def get(self, request):
+        return render(request, 'authentication/register.html')
+    def post(self, request):
+        messages.success(request, 'Success success')
+        messages.warning(request, 'Success warning')
+        messages.info(request, 'Success info')
+        messages.error(request, 'Success error')
+
         return render(request, 'authentication/register.html')
     
 

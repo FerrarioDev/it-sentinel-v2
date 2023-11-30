@@ -11,7 +11,9 @@
         </div>
   
         <div class="modal-body p-5 pt-0">
-          <form class="" method="post" action="{% url 'validation_id' %}">
+          <form class="" method="post" action="{% url 'register' %}">
+            {% csrf_token %}
+            {% include "partials/_messages.html" %}
             <div class="form-floating mb-3">
               <input type="email" class="form-control rounded-3" name="email" id="emailField" placeholder="name@example.com">
               <label for="floatingInput">Email address</label>
