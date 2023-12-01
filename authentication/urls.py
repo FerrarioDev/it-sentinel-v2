@@ -6,5 +6,5 @@ urlpatterns = [
     path('register/', RegisterView.as_view(), name='register'),
     path('validate-id', csrf_exempt(UserValidationView.as_view()), name='validation_id'),
     path('validate-email', csrf_exempt(EmailValidationView.as_view()), name='validation_email'),
-    path('login/',  LogInView.as_view(), name='login'),
+    path('login/', LogInView.as_view(), name='login'),
 ]

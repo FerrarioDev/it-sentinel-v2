@@ -73,4 +73,3 @@ class LogInView(View):
     def get(self, request):
         return render(request, 'authentication/login.html')
     
-

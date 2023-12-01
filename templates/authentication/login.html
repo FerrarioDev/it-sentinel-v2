@@ -11,7 +11,8 @@
         </div>
   
         <div class="modal-body p-5 pt-0">
-          <form class="">
+          <form class="" method="post" action="{% url 'login' %}">
+            {% csrf_token %}
             <div class="form-floating mb-3">
                 <input type="text" class="form-control rounded-3" id="idField" placeholder="200120000">
                 <label for="floatingInput">Dnar ID</label>
