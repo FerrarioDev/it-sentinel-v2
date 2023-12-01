@@ -4,6 +4,8 @@ from django.http import JsonResponse
 import json
 from django.contrib.auth.models import User
 from validate_email import validate_email
+from django.contrib.auth.views import LoginView
+from .forms import LoginForm
 
 class RegisterView(View):
     def get(self, request):
@@ -37,8 +39,6 @@ class UserValidationView(View):
 
 
 
-class LogInView(View):
-    def get(self, request):
-        return render(request, 'authentication/login.html')
-    
-
+class LoginView(LoginView):
+    form_class = LoginForm
+    template_name = 'authentication/login.html'
