@@ -4,6 +4,7 @@ document.addEventListener('DOMContentLoaded', function() {
     const emailField = document.querySelector('#emailField')
     const emailFeedbackArea = document.querySelector('.email-feedback');
     const idSuccessOutput = document.querySelector('.idSuccessOutput');
+    const submitButton = document.querySelector('.submit-btn')
 
     emailField.addEventListener('keyup', (e) => {
         const emailVal = e.target.value;
@@ -21,9 +22,12 @@ document.addEventListener('DOMContentLoaded', function() {
             .then(data => {
                 console.log("data", data);
                 if (data.email_error) {
+                    submitButton.setAttribute('disabled');
                     emailField.classList.add("is-invalid");
                     emailFeedbackArea.style.display = 'block';
                     emailFeedbackArea.innerHTML = `<p>${data.email_error}</p>`;
+                } else {
+                    submitButton.removeAttribute('disabled');
                 }
             });
         }
@@ -46,9 +50,12 @@ document.addEventListener('DOMContentLoaded', function() {
                     idSuccessOutput.style.display='none'
                     console.log("data", data);
                     if (data.dnarid_error) {
+                        submitButton.setAttribute('disabled');
                         dnarId.classList.add("is-invalid");
                         feedbackArea.style.display = 'block';
                         feedbackArea.innerHTML = `<p>${data.dnarid_error}</p>`;
+                    } else {
+                        submitButton.removeAttribute('disabled');
                     }
                 }
             );

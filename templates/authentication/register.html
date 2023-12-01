@@ -1,47 +1,43 @@
+<!-- authentication/register.html -->
 {% extends "authentication/base_auth.html" %}
 {% load static %}
 {% block content %}
 <div class="modal modal-signin position-static d-block bg-secondary py-5" tabindex="-1" role="dialog" id="modalSignin">
     <div class="modal-dialog" role="document">
-      <div class="modal-content rounded-4 shadow">
-        <div class="modal-header p-5 pb-4 border-bottom-0">
-          <!-- <h1 class="modal-title fs-5" >Modal title</h1> -->
-          <h1 class="fw-bold mb-0 fs-2">Sign up for free</h1>
-          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-        </div>
-  
-        <div class="modal-body p-5 pt-0">
-          <form class="" method="post" action="{% url 'register' %}">
-            {% csrf_token %}
-            {% include "partials/_messages.html" %}
-            <div class="form-floating mb-3">
-              <input type="email" class="form-control rounded-3" name="email" id="emailField" placeholder="name@example.com">
-              <label for="floatingInput">Email address</label>
+        <div class="modal-content rounded-4 shadow">
+            <div class="modal-header p-5 pb-4 border-bottom-0">
+                <h1 class="fw-bold mb-0 fs-2">Sign up for free</h1>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
-            <div class="email-feedback" style="display:none"></div>
 
-            <div class="form-floating mb-3">
-                <input type="text" class="form-control rounded-3" name="dnarId" id="idField" placeholder="200120000">
-                <label for="floatingInput">Dnar ID</label>
+            <div class="modal-body p-5 pt-0">
+                <form method="post" action="{% url 'register' %}">
+                    {% csrf_token %}
+                    {% include "partials/_messages.html" %}
+                    <div class="form-floating mb-3">
+                        <input type="email" class="form-control rounded-3" name="email" id="emailField" placeholder="name@example.com" value="{{ form.email.value }}">
+                        <label for="floatingInput">Email address</label>
+                    </div>
+                    <div class="email-feedback" style="display:none"></div>
+
+                    <div class="form-floating mb-3">
+                        <input type="text" class="form-control rounded-3" name="dnarId" id="idField" placeholder="200120000" value="{{ form.dnarId.value }}">
+                        <label for="floatingInput">Dnar ID</label>
+                    </div>
+                    <div class="invalid-feedback" style="display:none"></div>
+                    <p class="text-sn text-success idSuccessOutput"></p>
+                    <div class="form-floating mb-3">
+                        <input type="password" class="form-control rounded-3" id="floatingPassword" placeholder="Password" name="password">
+                        <label for="floatingPassword">Password</label>
+                    </div>
+                    <button class="w-100 mb-2 btn btn-lg rounded-3 btn-success submit-btn" type="submit">Sign up</button>
+                    <small class="text-muted">By clicking Sign up, you agree to the terms of use.</small>
+                    <hr class="my-4">
+                </form>
             </div>
-            <div class="invalid-feedback" style="display:none"></div>
-            <p class="text-sn text-success idSuccessOutput"></p>
-            <div class="form-floating mb-3">
-              <input type="password" class="form-control rounded-3" id="floatingPassword" placeholder="Password">
-              <label for="floatingPassword">Password</label>
-            </div>
-            <div class="form-floating mb-3">
-                <input type="text" class="form-control rounded-3" id="areaField" placeholder="Aftermarket">
-                <label for="floatingPassword">Area</label>
-            </div>
-            <button class="w-100 mb-2 btn btn-lg rounded-3 btn-success" type="submit">Sign up</button>
-            <small class="text-muted">By clicking Sign up, you agree to the terms of use.</small>
-            <hr class="my-4">
-          </form>
         </div>
-      </div>
     </div>
-  </div>
+</div>
 
-  <script src="{% static 'js/register.js' %}"> </script>
+<script src="{% static 'js/register.js' %}"> </script>
 {% endblock content %}

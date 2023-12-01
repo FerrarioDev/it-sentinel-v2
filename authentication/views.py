@@ -1,21 +1,45 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from django.views import View
 from django.http import JsonResponse
 import json
-from django.contrib.auth.models import User
+from .models import CustomUser
 from validate_email import validate_email
 from django.contrib import messages
+from .forms import RegistrationForm
 
 class RegisterView(View):
     def get(self, request):
-        return render(request, 'authentication/register.html')
-    def post(self, request):
-        messages.success(request, 'Success success')
-        messages.warning(request, 'Success warning')
-        messages.info(request, 'Success info')
-        messages.error(request, 'Success error')
+        form = RegistrationForm()
+        return render(request, 'authentication/register.html', {'form': form})
 
-        return render(request, 'authentication/register.html')
+    def post(self, request):
+        form = RegistrationForm(request.POST)
+
+        if form.is_valid():
+            dnarId = form.cleaned_data['dnarId']
+            email = form.cleaned_data['email']
+            password = form.cleaned_data['password']
+
+            # Check if user already exists
+            if CustomUser.objects.filter(dnarId=dnarId).exists():
+                messages.error(request, 'DNAR ID is already registered.')
+                return render(request, 'authentication/register.html', {'form': form})
+
+            if CustomUser.objects.filter(email=email).exists():
+                messages.error(request, 'Email is already registered.')
+                return render(request, 'authentication/register.html', {'form': form})
+
+            if len(password) < 6:
+                messages.error(request, 'Password too short.')
+                return render(request, 'authentication/register.html', {'form': form})
+
+            # Create and save the user
+            user = CustomUser.objects.create_user(dnarId=dnarId, email=email, password=password)
+            messages.success(request, 'Account successfully created.')
+            return redirect('login')  # Redirect to the login page after successful registration
+
+        # Form is not valid, re-render the registration page with errors
+        return render(request, 'authentication/register.html', {'form': form})
     
 
 class EmailValidationView(View):
@@ -25,7 +49,7 @@ class EmailValidationView(View):
 
         if not validate_email(email):
             return JsonResponse({'email_error':'Email is invalid'}, status=400)
-        if User.objects.filter(email = email).exists():
+        if CustomUser.objects.filter(email = email).exists():
             return JsonResponse({'email_error':'Sorry email is in use, choose another one'}, status=409)
 
         return JsonResponse({'email_valid': True},)
@@ -38,7 +62,7 @@ class UserValidationView(View):
 
         if not str(dnarId).isnumeric():
             return JsonResponse({'dnarid_error':'Dnar ID should only contain numeric characters'}, status=400)
-        if User.objects.filter(username = dnarId).exists():
+        if CustomUser.objects.filter(dnarId = dnarId).exists():
             return JsonResponse({'dnarId_error':'dnarId in use, choose another one'}, status=409)
 
         return JsonResponse({'dnarid_valid': True},)
