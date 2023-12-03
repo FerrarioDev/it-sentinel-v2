@@ -6,6 +6,7 @@ from .models import CustomUser
 from validate_email import validate_email
 from django.contrib import messages
 from .forms import RegistrationForm
+from django.core.mail import send_mail
 
 class RegisterView(View):
     def get(self, request):
@@ -35,6 +36,17 @@ class RegisterView(View):
 
             # Create and save the user
             user = CustomUser.objects.create_user(dnarId=dnarId, email=email, password=password)
+            user.is_active = False
+            user.save()
+            email_subject='Activate your account'
+            email_body = ''
+            email = send_mail(
+                        email_subject,
+                        email_body,
+                        "noreply@semycolon.com",
+                        [email],
+                        fail_silently=False,
+                    )
             messages.success(request, 'Account successfully created.')
             return redirect('login')  # Redirect to the login page after successful registration
 
