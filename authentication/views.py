@@ -38,8 +38,9 @@ class RegisterView(View):
             user = CustomUser.objects.create_user(dnarId=dnarId, email=email, password=password)
             user.is_active = False
             user.save()
+            
             email_subject='Activate your account'
-            email_body = ''
+            email_body = 'Test Body'
             email = send_mail(
                         email_subject,
                         email_body,
@@ -47,6 +48,8 @@ class RegisterView(View):
                         [email],
                         fail_silently=False,
                     )
+            email.send(fail_silently=False)
+
             messages.success(request, 'Account successfully created.')
             return redirect('login')  # Redirect to the login page after successful registration
 
@@ -81,7 +84,7 @@ class UserValidationView(View):
 
 
 
-class LogInView(View):
+class LoginView(View):
     def get(self, request):
         return render(request, 'authentication/login.html')
-    
+
