@@ -2,7 +2,7 @@ from django.shortcuts import render, redirect
 from django.views import View
 from django.http import JsonResponse
 import json
-from django.contrib.auth import authenticate, login
+from django.contrib.auth import authenticate, login, logout
 from .models import CustomUser
 from validate_email import validate_email
 from django.contrib import messages
@@ -105,3 +105,7 @@ class LoginView(View):
             messages.error(request, "Invalid form submission. Please check your input.")
 
         return render(request, 'authentication/login.html', {'form': form})
+    
+def logoutView(request):
+    logout(request)
+    return redirect('login')
