@@ -2,6 +2,7 @@
 {% extends "authentication/base_auth.html" %}
 {% load static %}
 {% block content %}
+
 <div class="modal modal-signin position-static d-block bg-secondary py-5" tabindex="-1" role="dialog" id="modalSignin">
     <div class="modal-dialog" role="document">
         <div class="modal-content rounded-4 shadow">
@@ -12,6 +13,7 @@
 
             <div class="modal-body p-5 pt-0">
                 <form method="post" action="{% url 'login' %}">
+                    {% include "partials/_messages.html" %}
                     {% csrf_token %}
                     <div class="form-floating mb-3">
                         <input type="text" class="form-control rounded-3" id="idField" name="dnarId" value="{{ form.dnarId.value }}" placeholder="200120000">

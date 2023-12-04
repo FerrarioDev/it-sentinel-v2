@@ -87,25 +87,27 @@ class UserValidationView(View):
 
 class LoginView(View):
     def get(self, request):
-        form = LoginForm()
+        form = LoginForm(initial={'dnarId': ''})
         return render(request, 'authentication/login.html', {'form': form})
 
     def post(self, request):
         form = LoginForm(request.POST)
         if form.is_valid():
-            dnarId = form.cleaned_data['dnarId']
+            dnar_id = form.cleaned_data['dnarId']
             password = form.cleaned_data['password']
-            user = authenticate(request, username=dnarId, password=password)
+            user = authenticate(request, username=dnar_id, password=password)
             if user is not None:
                 login(request, user)
+                messages.success(request, "Login successful. Welcome back!")
                 return redirect('index')
             else:
-                messages.error(request, "Invalid credentials. Please try again.")
+                messages.error(request, "Invalid credentials. Please double-check your DNAR ID and password.")
         else:
-            messages.error(request, "Invalid form submission. Please check your input.")
+            messages.error(request, "Invalid form submission. Please review your input.")
 
         return render(request, 'authentication/login.html', {'form': form})
     
 def logoutView(request):
     logout(request)
+    messages.success(request, 'You have been logged out')
     return redirect('login')
