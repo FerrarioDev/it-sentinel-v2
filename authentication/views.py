@@ -2,15 +2,16 @@ from django.shortcuts import render, redirect
 from django.views import View
 from django.http import JsonResponse
 import json
+from django.contrib.auth import authenticate, login
 from .models import CustomUser
 from validate_email import validate_email
 from django.contrib import messages
-from .forms import RegistrationForm
+from .forms import RegistrationForm, LoginForm
 from django.core.mail import send_mail
 
 class RegisterView(View):
     def get(self, request):
-        form = RegistrationForm()
+        form = RegistrationForm(initial={'dnarId': '', 'email':''})
         return render(request, 'authentication/register.html', {'form': form})
 
     def post(self, request):
@@ -39,7 +40,7 @@ class RegisterView(View):
             user.is_active = False
             user.save()
             
-            email_subject='Activate your account'
+            '''email_subject='Activate your account'
             email_body = 'Test Body'
             email = send_mail(
                         email_subject,
@@ -49,7 +50,7 @@ class RegisterView(View):
                         fail_silently=False,
                     )
             email.send(fail_silently=False)
-
+            '''
             messages.success(request, 'Account successfully created.')
             return redirect('login')  # Redirect to the login page after successful registration
 
@@ -86,5 +87,21 @@ class UserValidationView(View):
 
 class LoginView(View):
     def get(self, request):
-        return render(request, 'authentication/login.html')
+        form = LoginForm()
+        return render(request, 'authentication/login.html', {'form': form})
 
+    def post(self, request):
+        form = LoginForm(request.POST)
+        if form.is_valid():
+            dnarId = form.cleaned_data['dnarId']
+            password = form.cleaned_data['password']
+            user = authenticate(request, username=dnarId, password=password)
+            if user is not None:
+                login(request, user)
+                return redirect('index')
+            else:
+                messages.error(request, "Invalid credentials. Please try again.")
+        else:
+            messages.error(request, "Invalid form submission. Please check your input.")
+
+        return render(request, 'authentication/login.html', {'form': form})
