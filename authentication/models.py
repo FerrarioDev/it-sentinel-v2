@@ -1,6 +1,13 @@
 from django.contrib.auth.models import AbstractBaseUser, BaseUserManager, PermissionsMixin
 from django.db import models
 
+AREA = (
+    ('AFTERMARKET','Aftermarket'),
+    ('IT','IT'),
+    ('ADMINISTRATION','Administration'),
+    ('PRODUCTION','Production'),
+    )
+
 class CustomUserManager(BaseUserManager):
     def create_user(self, dnarId, email, password=None, **extra_fields):
         if not email:
@@ -27,7 +34,7 @@ class CustomUser(AbstractBaseUser, PermissionsMixin):
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
 
-    area = models.CharField(max_length=255, blank=True, null=True)
+    area = models.CharField(max_length=255, choices=AREA, default='IT')
 
     objects = CustomUserManager()
 
