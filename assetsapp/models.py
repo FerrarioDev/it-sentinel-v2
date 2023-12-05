@@ -16,6 +16,7 @@ class AssetCategory(models.Model):
 class Asset(models.Model):
     asset_number = models.CharField(primary_key=True, max_length=9, unique=True)
     asset_category = models.ForeignKey('AssetCategory', on_delete=models.PROTECT)
+    description = models.CharField(max_length=255, blank=True)
     serial_number = models.CharField(max_length=100, unique=True)
     location = models.CharField(max_length=50)
     status = models.CharField(max_length=9, choices = STATUS, default="USE")
