@@ -99,7 +99,7 @@ class LoginView(View):
             if user is not None:
                 login(request, user)
                 messages.success(request, "Login successful. Welcome back!")
-                return redirect('index')
+                return redirect('assets')
             else:
                 messages.error(request, "Invalid credentials. Please double-check your DNAR ID and password.")
         else:
