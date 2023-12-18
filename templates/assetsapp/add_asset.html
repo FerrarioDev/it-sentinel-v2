@@ -1,21 +1,79 @@
 {% extends "base.html" %}
 
 {% block content %}
-<ul class="nav nav-tabs">
-  <li class="nav-item">
-    <a class="nav-link active" href="#">Active</a>
-  </li>
-  <li class="nav-item">
-    <a class="nav-link" href="#">Link</a>
-  </li>
-  <li class="nav-item">
-    <a class="nav-link" href="#">Link</a>
-  </li>
-  <li class="nav-item">
-    <a class="nav-link disabled" href="#">Disabled</a>
-  </li>
-</ul>
+<div class="container mt-4"> 
+    <div class="col-md-7 col-lg-8">
+    <h4 class="mb-3">Add Asset</h4>
+    <form class="needs-validation" method="post" action="{% url 'add_assets' %}" novalidate>
+        <div class="row g-3">
+        <div class="col-sm-6">
+            <label for="floatingInput" class="form-label">Asset ID</label>
+            <input type="text" class="form-control" id="assetNumber" placeholder="" value="{{ form.assetNumber.value }}" required>
+            <div class="invalid-feedback">
+            Valid first name is required.
+            </div>
+        </div>
 
-<h1>Add Asset</h1>
+        <div class="col-md-6">
+            <label for="country" class="form-label">Category</label>
+            <select class="form-select" id="country" required>
+            <option value="">Choose...</option>
+            <option>Computer</option>
+            </select>
+            <div class="invalid-feedback">
+            Please select a valid country.
+            </div>
+        </div>
+
+        <div class="col-12">
+            <label for="Description" class="form-label">Description</label>
+            <div class="input-group has-validation">
+            <input type="text" class="form-control" id="assetDescription" placeholder="LENOVO ThinkCentre M60e" required>
+            <div class="invalid-feedback">
+                Invalid Description
+            </div>
+            </div>
+        </div>
+
+        <div class="col-12">
+            <label for="email" class="form-label">Serial Number</label>
+            <input type="email" class="form-control" id="email" placeholder="ACE4_2E00_254B_7840_2EE4_ZAC00_0000_0001">
+        </div>
+
+            <div class="col-md-6">
+                <label for="cc-name" class="form-label">Location</label>
+                <input type="text" class="form-control" id="cc-name" placeholder="" required>
+            </div>
+    
+            <div class="col-md-6">
+                <label for="country" class="form-label">Status</label>
+                <select class="form-select" id="country" required>
+                <option value="">Choose...</option>
+                <option>Assigned</option>
+                </select>
+            </div>
+
+        <div class="col-md-6">
+            <label for="cc-name" class="form-label">Purchase date</label>
+            <input type="text" class="form-control" id="cc-name" placeholder="" required>
+            <div class="invalid-feedback">
+            Name on card is required
+            </div>
+        </div>
+
+        <div class="col-md-6">
+            <label for="cc-number" class="form-label">Warranty expiration date</label>
+            <input type="text" class="form-control" id="cc-number" placeholder="" required>
+            <div class="invalid-feedback">
+            Credit card number is required
+            </div>
+        </div>
+
+        <hr class="my-4">
+
+        <button class="w-100 btn btn-primary btn-lg" type="submit">Add Asset</button>
+    </form>
+  </div>
+</div>
 
 {% endblock %}

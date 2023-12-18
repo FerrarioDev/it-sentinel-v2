@@ -26,8 +26,9 @@ def add_assets(request):
                 assignment = Assignment(asset=asset, assigned_to=form.cleaned_data['assigned_to'], assigned_date=form.cleaned_data['assigned_date'])
                 assignment.save()
 
-            return redirect('asset_detail', asset_number=asset.asset_number)
+            # return redirect('asset_detail', asset_number=asset.asset_number)
+            return render(request, 'assetsapp/add_asset.html', {'form': form})
     else:
         form = AssetCreationForm()
 
-    return render(request, 'create_asset.html', {'form': form})
+    return render(request, 'assetsapp/add_asset.html', {'form': form})

@@ -5,7 +5,7 @@ from authentication.models import CustomUser
 class AssetCreationForm(forms.ModelForm):
     class Meta:
         model = Asset
-        fields = ['asset_category', 'description', 'serial_number', 'location', 'status', 'purchase_date', 'warranty_expiry_date']
+        fields = ['asset_number', 'asset_category', 'description', 'serial_number', 'location', 'status', 'purchase_date', 'warranty_expiry_date']
 
     computer_id = forms.CharField(max_length=15, required=False)
     drive_serialnumber = forms.CharField(max_length=50, required=False)
