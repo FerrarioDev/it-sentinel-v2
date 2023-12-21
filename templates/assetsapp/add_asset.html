@@ -1,10 +1,11 @@
 {% extends "base.html" %}
-
+{% load static %}
 {% block content %}
 <div class="container mt-4"> 
     <div class="col-md-7 col-lg-8">
     <h4 class="mb-3">Add Asset</h4>
     <form class="needs-validation" method="post" action="{% url 'add_assets' %}" novalidate>
+        {% csrf_token %}
         <div class="row g-3">
         <div class="col-sm-6">
             <label for="floatingInput" class="form-label">Asset ID</label>
@@ -16,14 +17,30 @@
 
         <div class="col-md-6">
             <label for="country" class="form-label">Category</label>
-            <select class="form-select" id="country" required>
-            <option value="">Choose...</option>
-            <option>Computer</option>
+            <select class="form-select" id="id_asset_category" name="asset_category" required>
+                <option value="">Choose...</option>
+                <option value="Computer">Computer</option>
             </select>
             <div class="invalid-feedback">
-            Please select a valid country.
+                {{ form.errors.asset_category }}
             </div>
         </div>
+    
+            <div class="col-md-6"id="computer_id" style="display: none;">
+                <label for="computer_id" class="form-label">Computer ID</label>
+                <input type="text" class="form-control" id="id_computer_id" name="computer_id" value="{{ form.computer_id.value }}">
+                <div class="invalid-feedback">
+                    {{ form.errors.computer_id }}
+                </div>
+            </div>
+    
+            <div class="col-md-6" id="drive_serialnumber" style="display: none;" >
+                <label for="drive_serialnumber" class="form-label">Drive Serial Number</label>
+                <input type="text" class="form-control" id="id_drive_serialnumber" name="drive_serialnumber" value="{{ form.drive_serialnumber.value }}">
+                <div class="invalid-feedback">
+                    {{ form.errors.drive_serialnumber }}
+                </div>
+            </div>
 
         <div class="col-12">
             <label for="Description" class="form-label">Description</label>
@@ -71,9 +88,9 @@
 
         <hr class="my-4">
 
-        <button class="w-100 btn btn-primary btn-lg" type="submit">Add Asset</button>
+        <button class="w-100 btn btn-success btn-lg" type="submit">Add Asset</button>
     </form>
   </div>
 </div>
-
+<script src="{% static "js/add_asset.js" %}"></script>
 {% endblock %}

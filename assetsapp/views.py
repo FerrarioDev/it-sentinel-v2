@@ -1,7 +1,9 @@
 from django.shortcuts import render, redirect
 from django.contrib.auth.decorators import login_required
+from django.urls import reverse
 from .forms import AssetCreationForm
 from .models import Asset, Computer, Assignment
+
 
 @login_required(login_url='/auth/login')
 def index(request):
@@ -27,7 +29,7 @@ def add_assets(request):
                 assignment.save()
 
             # return redirect('asset_detail', asset_number=asset.asset_number)
-            return render(request, 'assetsapp/add_asset.html', {'form': form})
+            return redirect(reverse('asset_detail', args=[asset.asset_number]))
     else:
         form = AssetCreationForm()
 
