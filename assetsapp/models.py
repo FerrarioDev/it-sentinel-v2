@@ -2,7 +2,7 @@ from django.db import models
 from authentication.models import CustomUser
 
 STATUS = (
-    ('USE','Use'),
+    ('USE','use'),
     ('DISUSE','disuse'),
     ('IDLE', 'idle'),
     )
