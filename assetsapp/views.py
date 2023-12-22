@@ -2,6 +2,7 @@ from django.shortcuts import render, redirect
 from django.contrib.auth.decorators import login_required
 from django.urls import reverse
 from django.views import View
+from django.views.generic import ListView
 from .forms import AssetCreationForm
 from .models import Asset, Computer, Assignment
 
@@ -40,3 +41,11 @@ class Add_assets(View):
         # If the form is invalid, render the form page with errors
         print('not created')
         return render(request, 'assetsapp/add_asset.html', {'form': form})
+
+class AssetListView(ListView):
+    model = Asset
+    template_name = 'assetsapp/dashboard.html'
+    context_object_name = 'assets'
+
+    def get(self, request, *args, **kwargs):
+        return super().get(request, *args, **kwargs)
