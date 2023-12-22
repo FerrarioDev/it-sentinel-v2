@@ -1,6 +1,7 @@
 from django.shortcuts import render, redirect
 from django.contrib.auth.decorators import login_required
 from django.urls import reverse
+from django.views import View
 from .forms import AssetCreationForm
 from .models import Asset, Computer, Assignment
 
@@ -9,9 +10,14 @@ from .models import Asset, Computer, Assignment
 def index(request):
     return render(request, 'assetsapp/index.html')
 
-def add_assets(request):
-    if request.method == 'POST':
-        form = AssetCreationForm(request.POST)
+class Add_assets(View):
+    
+    def get(self, request):
+        form = AssetCreationForm(initial={'asset_number': '', 'description': '', 'serial_number': '', 'location': '', 'purchase_date': '', 'warranty_expiry_date': ''})
+        return render(request, 'assetsapp/add_asset.html', {'form': form})
+
+    def post(self, request):
+        form = AssetCreationForm(request.POST, initial={'asset_number': '', 'description': '', 'serial_number': '', 'location': '', 'purchase_date': '', 'warranty_expiry_date': ''})
         if form.is_valid():
             asset = form.save(commit=False)
 
@@ -28,9 +34,9 @@ def add_assets(request):
                 assignment = Assignment(asset=asset, assigned_to=form.cleaned_data['assigned_to'], assigned_date=form.cleaned_data['assigned_date'])
                 assignment.save()
 
-            # return redirect('asset_detail', asset_number=asset.asset_number)
-            return redirect(reverse('asset_detail', args=[asset.asset_number]))
-    else:
-        form = AssetCreationForm()
+            # Redirect to the asset_detail view
+            return redirect('asset_detail', asset_number=asset.asset_number)
 
-    return render(request, 'assetsapp/add_asset.html', {'form': form})
+        # If the form is invalid, render the form page with errors
+        print('not created')
+        return render(request, 'assetsapp/add_asset.html', {'form': form})

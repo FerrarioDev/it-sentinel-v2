@@ -24,7 +24,7 @@ class Asset(models.Model):
     warranty_expiry_date = models.DateField()
 
     def __str__(self):
-        return f"{self.asset_category.name} - {self.serial_number}"
+        return f"{self.asset_category.name} - {self.asset_number}"
 
 class Computer(models.Model):
     computer_id = models.CharField(primary_key=True, max_length=15, unique=True)

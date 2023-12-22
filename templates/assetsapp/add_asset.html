@@ -9,9 +9,9 @@
         <div class="row g-3">
         <div class="col-sm-6">
             <label for="floatingInput" class="form-label">Asset ID</label>
-            <input type="text" class="form-control" id="assetNumber" placeholder="" value="{{ form.assetNumber.value }}" required>
+            <input type="text" class="form-control" id="assetNumber" placeholder="" value="{{ form.asset_number.value }}" required>
             <div class="invalid-feedback">
-            Valid first name is required.
+                {{ form.errors.asset_number }}
             </div>
         </div>
 
@@ -46,21 +46,21 @@
         <div class="col-12">
             <label for="Description" class="form-label">Description</label>
             <div class="input-group has-validation">
-            <input type="text" class="form-control" id="assetDescription" placeholder="LENOVO ThinkCentre M60e" required>
+            <input type="text" class="form-control" id="assetDescription" placeholder="LENOVO ThinkCentre M60e" value="{{ form.description.value }}" required>
             <div class="invalid-feedback">
-                Invalid Description
+                {{ form.errors.description }}
             </div>
             </div>
         </div>
 
         <div class="col-12">
             <label for="email" class="form-label">Serial Number</label>
-            <input type="email" class="form-control" id="email" placeholder="ACE4_2E00_254B_7840_2EE4_ZAC00_0000_0001">
+            <input type="email" class="form-control" id="email" value="{{ form.serial_number.value }}" placeholder="ACE4_2E00_254B_7840_2EE4_ZAC00_0000_0001">
         </div>
 
             <div class="col-md-6">
                 <label for="cc-name" class="form-label">Location</label>
-                <input type="text" class="form-control" id="cc-name" placeholder="" required>
+                <input type="text" class="form-control" id="cc-name" value="{{ form.location.value }}" placeholder="" required>
             </div>
     
             <div class="col-md-6">
@@ -74,17 +74,17 @@
 
         <div class="col-md-6">
             <label for="cc-name" class="form-label">Purchase date</label>
-            <input type="text" class="form-control" id="cc-name" placeholder="" required>
+            <input type="text" class="form-control" id="cc-name" placeholder="" value="{{ form.purchase_date.value }}" required>
             <div class="invalid-feedback">
-            Name on card is required
+                {{ form.errors.purchase_date }}
             </div>
         </div>
 
         <div class="col-md-6">
             <label for="cc-number" class="form-label">Warranty expiration date</label>
-            <input type="text" class="form-control" id="cc-number" placeholder="" required>
+            <input type="text" class="form-control" id="cc-number" value="{{ form.warranty_expiry_date.value }}" placeholder="" required>
             <div class="invalid-feedback">
-            Credit card number is required
+                {{ form.errors.warranty_expiry_date }}
             </div>
         </div>
 
@@ -92,6 +92,11 @@
 
         <button class="w-100 btn btn-success btn-lg" type="submit">Add Asset</button>
     </form>
+    {% if form.errors %}
+        <div class="alert alert-danger mt-3">
+            <strong>Error!</strong> Please correct the form errors below.
+        </div>
+    {% endif %}
   </div>
 </div>
 <script src="{% static "js/add_asset.js" %}"></script>
