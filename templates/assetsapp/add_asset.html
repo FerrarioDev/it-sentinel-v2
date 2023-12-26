@@ -4,28 +4,30 @@
 <div class="container mt-4"> 
     <div class="col-md-7 col-lg-8">
     <h4 class="mb-3">Add Asset</h4>
-    <form class="needs-validation" method="post" action="{% url 'add_assets' %}" novalidate>
+    <form class="needs-validation" method="post" action="{% url 'add_assets' %}">
         {% csrf_token %}
         <div class="row g-3">
-        <div class="col-sm-6">
-            <label for="floatingInput" class="form-label">Asset ID</label>
-            <input type="text" class="form-control" id="assetNumber" placeholder="" value="{{ form.asset_number.value }}" required>
-            <div class="invalid-feedback">
-                {{ form.errors.asset_number }}
+            <div class="row g-3">
+                <div class="col-sm-6">
+                    <label for="floatingInput" class="form-label">Asset ID</label>
+                    <input type="text" class="form-control" id="assetNumber" name="asset_number" placeholder="" value="{{ form.asset_number.value }}" required>
+                    <div class="invalid-feedback">
+                        {{ form.errors.asset_number }}
+                    </div>
+                </div>
+        
+                <div class="col-md-6">
+                    <label for="country" class="form-label">Category</label>
+                    <select class="form-select" id="id_asset_category" name="asset_category" required>
+                        {% for category in form.asset_category.field.choices %}
+                            <option value="{{ category.0 }}">{{ category.1 }}</option>
+                        {% endfor %}
+                    </select>
+                    <div class="invalid-feedback">
+                        {{ form.errors.asset_category }}
+                    </div>
+                </div>
             </div>
-        </div>
-
-        <div class="col-md-6">
-            <label for="country" class="form-label">Category</label>
-            <select class="form-select" id="id_asset_category" name="asset_category" required>
-                {% for category in form.asset_category.field.choices %}
-                    <option value="{{ category.1 }}">{{ category.1 }}</option>
-                {% endfor %}
-            </select>
-            <div class="invalid-feedback">
-                {{ form.errors.asset_category }}
-            </div>
-        </div>
     
             <div class="col-md-6"id="computer_id" style="display: none;">
                 <label for="computer_id" class="form-label">Computer ID</label>
@@ -54,27 +56,33 @@
         </div>
 
         <div class="col-12">
-            <label for="email" class="form-label">Serial Number</label>
-            <input type="email" class="form-control" id="email" value="{{ form.serial_number.value }}" placeholder="ACE4_2E00_254B_7840_2EE4_ZAC00_0000_0001">
+            <label for="cc-name" class="form-label">Serial Number</label>
+            <input type="text" class="form-control" id="cc-name" name="serial_number" value="{{ form.serial_number.value }}" placeholder="ACE4_2E00_254B_7840_2EE4_ZAC00_0000_0001" required>
+            <div class="invalid-feedback">
+                {{ form.errors.serial_number }}
+            </div>
         </div>
 
-            <div class="col-md-6">
-                <label for="cc-name" class="form-label">Location</label>
-                <input type="text" class="form-control" id="cc-name" value="{{ form.location.value }}" placeholder="" required>
-            </div>
-    
-            <div class="col-md-6">
-                <label for="country" class="form-label">Status</label>
-                <select class="form-select" id="country" required>
+        <div class="col-md-6">
+            <label for="cc-name" class="form-label">Location</label>
+            <input type="text" class="form-control" id="cc-name" name="location" value="{{ form.location.value }}" placeholder="" required>
+        </div>
+
+        <div class="col-md-6">
+            <label for="country" class="form-label">Status</label>
+            <select class="form-select" id="country" name="status" required>
                 {% for status_choice in form.status.field.choices %}
-                    <option value="{{ status_choice.1 }}">{{ status_choice.1 }}</option>
+                    <option value="{{ status_choice.0 }}">{{ status_choice.1 }}</option>
                 {% endfor %}
-                </select>
+            </select>
+            <div class="invalid-feedback">
+                {{ form.errors.status }}
             </div>
+        </div>
 
         <div class="col-md-6">
             <label for="cc-name" class="form-label">Purchase date</label>
-            <input type="text" class="form-control" id="cc-name" placeholder="" value="{{ form.purchase_date.value }}" required>
+            <input type="text" class="form-control" id="cc-name" name="purchase_date" placeholder="" value="{{ form.purchase_date.value }}" required>
             <div class="invalid-feedback">
                 {{ form.errors.purchase_date }}
             </div>
@@ -82,7 +90,7 @@
 
         <div class="col-md-6">
             <label for="cc-number" class="form-label">Warranty expiration date</label>
-            <input type="text" class="form-control" id="cc-number" value="{{ form.warranty_expiry_date.value }}" placeholder="" required>
+            <input type="text" class="form-control" id="cc-number" name="warranty_expiry_date" value="{{ form.warranty_expiry_date.value }}" placeholder="" required>
             <div class="invalid-feedback">
                 {{ form.errors.warranty_expiry_date }}
             </div>
