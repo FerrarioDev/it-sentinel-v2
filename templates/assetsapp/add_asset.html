@@ -20,8 +20,9 @@
                     <label for="country" class="form-label">Category</label>
                     <select class="form-select" id="id_asset_category" name="asset_category" required>
                         {% for category in form.asset_category.field.choices %}
-                            <option value="{{ category.0 }}">{{ category.1 }}</option>
+                            <option value="{{ category.1 }}">{{ category.1 }}</option>
                         {% endfor %}
+                        
                     </select>
                     <div class="invalid-feedback">
                         {{ form.errors.asset_category }}

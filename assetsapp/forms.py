@@ -1,5 +1,5 @@
 from django import forms
-from .models import Asset, Computer, Assignment
+from .models import Asset, Computer, Assignment, AssetCategory
 from authentication.models import CustomUser
 
 class AssetCreationForm(forms.ModelForm):
@@ -11,6 +11,7 @@ class AssetCreationForm(forms.ModelForm):
     drive_serialnumber = forms.CharField(max_length=50, required=False)
     assigned_to = forms.ModelChoiceField(queryset=CustomUser.objects.all(), required=False)
     assigned_date = forms.DateField(required=False)
+    asset_category = forms.ModelChoiceField(queryset=AssetCategory.objects.all())
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)

@@ -40,7 +40,7 @@ class Add_assets(View):
 
             # Optionally create a Computer object
             if category.name == 'Computer':
-                computer = Computer(computer_id=form.cleaned_data['computer_id'], drive_serialnumber=form.cleaned_data['drive_serialnumber'])
+                computer = Computer(computer_id=form.cleaned_data['computer_id'], drive_serialnumber=form.cleaned_data['drive_serialnumber'],asset_id=asset_id)
                 computer.save()
                 asset.computer = computer  # Associate the Computer object with the Asset
 
