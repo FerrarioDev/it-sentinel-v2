@@ -36,17 +36,16 @@ class Add_assets(View):
                 messages.error(request, 'Serial Number is already registered')
                 return render(request, 'assetsapp/add_asset.html', {'form': form})
             
-            computer_id = "Z20012" + asset_id
+            computer_id = "Z20012" + str(asset_id)
             
             asset = form.save(commit=False)
-
+            asset.save()
             # Optionally create a Computer object
             if category.name == 'Computer':
                 computer = Computer(computer_id = computer_id, asset=asset)
                 computer.save()
                 asset.computer = computer  # Associate the Computer object with the Asset
 
-            asset.save()
 
             # Redirect to the asset_detail view
             return redirect('asset_list')
