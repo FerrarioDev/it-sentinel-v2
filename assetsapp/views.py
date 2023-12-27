@@ -7,7 +7,7 @@ from django.views.generic import ListView
 from django.views.decorators.csrf import csrf_exempt
 from .forms import AssetCreationForm
 from .models import Asset, Computer, Assignment
-
+import csv
 
 @login_required(login_url='/auth/login')
 def index(request):
@@ -46,13 +46,11 @@ class Add_assets(View):
                 computer.save()
                 asset.computer = computer  # Associate the Computer object with the Asset
 
-
             # Redirect to the asset_detail view
             return redirect('asset_list')
             # return redirect('asset_detail', asset_number=asset.asset_number)
 
         # If the form is invalid, render the form page with errors
-        print(form.errors)
         return render(request, 'assetsapp/add_asset.html', {'form': form})
 
 class AssetListView(ListView):
@@ -63,3 +61,25 @@ class AssetListView(ListView):
     def get(self, request, *args, **kwargs):
         return super().get(request, *args, **kwargs)
     
+def Upload_from_csv(request):
+    file_path = "assetsapp/Inventario_Hardware_Dnar_10-2023.csv"
+
+    with open(file_path, 'r', newline='') as csvfile:
+        csv_reader = csv.reader(csvfile)
+        header = next(csv_reader)  # Read the header row
+
+        # Assuming your CSV file has 6 columns, modify the range accordingly
+        for row in csv_reader:
+            if len(row) == 6:
+                # Access individual columns using indices (0-based)
+                col1 = row[0]
+                col2 = row[1]
+                col3 = row[2]
+                col4 = row[3]
+                col5 = row[4]
+                col6 = row[5]   
+
+                print(f"Column 1: {col1}, Column 2: {col2}, ..., Column 6: {col6}")
+    
+    # You can pass the CSV data to the template for rendering if needed
+    return redirect('asst_list')
