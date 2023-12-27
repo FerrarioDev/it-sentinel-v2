@@ -20,29 +20,13 @@
                     <label for="country" class="form-label">Category</label>
                     <select class="form-select" id="id_asset_category" name="asset_category" required>
                         {% for category in form.asset_category.field.choices %}
-                            <option value="{{ category.1 }}">{{ category.1 }}</option>
+                            <option value="{{ category.0 }}">{{ category.1 }}</option>
                         {% endfor %}
                         
                     </select>
                     <div class="invalid-feedback">
                         {{ form.errors.asset_category }}
                     </div>
-                </div>
-            </div>
-    
-            <div class="col-md-6"id="computer_id" style="display: none;">
-                <label for="computer_id" class="form-label">Computer ID</label>
-                <input type="text" class="form-control" id="id_computer_id" name="computer_id" value="{{ form.computer_id.value }}">
-                <div class="invalid-feedback">
-                    {{ form.errors.computer_id }}
-                </div>
-            </div>
-    
-            <div class="col-md-6" id="drive_serialnumber" style="display: none;" >
-                <label for="drive_serialnumber" class="form-label">Drive Serial Number</label>
-                <input type="text" class="form-control" id="id_drive_serialnumber" name="drive_serialnumber" value="{{ form.drive_serialnumber.value }}">
-                <div class="invalid-feedback">
-                    {{ form.errors.drive_serialnumber }}
                 </div>
             </div>
 
@@ -108,5 +92,4 @@
     {% endif %}
   </div>
 </div>
-<script src="{% static "js/add_asset.js" %}"></script>
 {% endblock %}

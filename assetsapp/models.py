@@ -26,15 +26,19 @@ class Asset(models.Model):
     def __str__(self):
         return f"{self.asset_category.name} - {self.asset_number}"
 
+class Drive(models.Model):
+    serialnumber = models.CharField(primary_key=True, max_length=255, unique=True)
+    capacity = models.CharField(max_length=255)
+    description = models.CharField(max_length=255)
+    user = models.ForeignKey(CustomUser, on_delete=models.CASCADE)
+
 class Computer(models.Model):
     computer_id = models.CharField(primary_key=True, max_length=15, unique=True)
     asset = models.OneToOneField('Asset', on_delete=models.CASCADE)
-    drive_serialnumber = models.CharField(max_length=50)    
-
+    drive_serialnumber = models.ForeignKey(Drive, on_delete=models.CASCADE, null=True, blank=True)    
 
     def __str__(self):
         return f"Computer ID: {self.computer_id} - Asset: {self.asset}"
-
 
 class Assignment(models.Model):
     asset = models.ForeignKey(Asset, on_delete=models.CASCADE)

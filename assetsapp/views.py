@@ -35,22 +35,19 @@ class Add_assets(View):
             if Asset.objects.filter(serial_number=serial_number).exists():
                 messages.error(request, 'Serial Number is already registered')
                 return render(request, 'assetsapp/add_asset.html', {'form': form})
-
+            
+            computer_id = "Z20012" + asset_id
+            
             asset = form.save(commit=False)
 
             # Optionally create a Computer object
             if category.name == 'Computer':
-                computer = Computer(computer_id=form.cleaned_data['computer_id'], drive_serialnumber=form.cleaned_data['drive_serialnumber'],asset_id=asset_id)
+                computer = Computer(computer_id = computer_id, asset=asset)
                 computer.save()
                 asset.computer = computer  # Associate the Computer object with the Asset
 
             asset.save()
 
-            ''' Optionally create an Assignment object
-            if form.cleaned_data.get('assign_to_user'):
-                assignment = Assignment(asset=asset, assigned_to=form.cleaned_data['assigned_to'], assigned_date=form.cleaned_data['assigned_date'])
-                assignment.save()
-            '''
             # Redirect to the asset_detail view
             return redirect('asset_list')
             # return redirect('asset_detail', asset_number=asset.asset_number)
