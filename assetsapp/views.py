@@ -1,4 +1,4 @@
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth.decorators import login_required
 from django.urls import reverse
 from django.contrib import messages
@@ -6,7 +6,7 @@ from django.views import View
 from django.views.generic import ListView
 from django.views.decorators.csrf import csrf_exempt
 from .forms import AssetCreationForm
-from .models import Asset, Computer, Assignment
+from .models import Asset, Computer, Assignment, AssetCategory
 import csv
 
 @login_required(login_url='/auth/login')
@@ -57,29 +57,22 @@ class AssetListView(ListView):
     model = Asset
     template_name = 'assetsapp/dashboard.html'
     context_object_name = 'assets'
-
-    def get(self, request, *args, **kwargs):
-        return super().get(request, *args, **kwargs)
     
-def Upload_from_csv(request):
-    file_path = "assetsapp/Inventario_Hardware_Dnar_10-2023.csv"
-
-    with open(file_path, 'r', newline='') as csvfile:
-        csv_reader = csv.reader(csvfile)
-        header = next(csv_reader)  # Read the header row
-
-        # Assuming your CSV file has 6 columns, modify the range accordingly
-        for row in csv_reader:
-            if len(row) == 6:
-                # Access individual columns using indices (0-based)
-                col1 = row[0]
-                col2 = row[1]
-                col3 = row[2]
-                col4 = row[3]
-                col5 = row[4]
-                col6 = row[5]   
-
-                print(f"Column 1: {col1}, Column 2: {col2}, ..., Column 6: {col6}")
+    def get_queryset(self):
+        # Retrieve the category parameter from the URL
+        category_name = self.kwargs.get('category', None)
+        
+        if category_name:
+            if category_name == 'All':
+                return Asset.objects.all()
+            else:
+                category = get_object_or_404(AssetCategory, name=category_name)
+                return Asset.objects.filter(asset_category=category)
+        
+        return Asset.objects.all()
     
-    # You can pass the CSV data to the template for rendering if needed
-    return redirect('asst_list')
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['asset_categories'] = AssetCategory.objects.all()
+        
+        return context

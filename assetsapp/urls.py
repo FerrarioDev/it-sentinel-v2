@@ -5,6 +5,6 @@ from .views import Add_assets, AssetListView
 urlpatterns = [
     path('', views.index, name='assets'),
     path('add-assets/', Add_assets.as_view(), name='add_assets'),
-    path('dashboard/', AssetListView.as_view(), name='asset_list'),
-    path('test/', views.Upload_from_csv)
+    path('list/<str:category>/', AssetListView.as_view(), name='asset_list'),
+
 ]
